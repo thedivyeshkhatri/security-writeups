@@ -12,3 +12,4 @@ platforms, labs, and in-scope programs.
 ### TryHackMe
 - [Burp Suite](thm-burp-suite.md) — using Burp for intercepting and
   modifying web requests, plus credential attacks and macros
+- [SQL Injection](thm-sql-injection.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
