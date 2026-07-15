@@ -13,5 +13,5 @@ platforms, labs, and in-scope programs.
 - [Burp Suite](thm-burp-suite.md) — using Burp for intercepting and
   modifying web requests, plus credential attacks and macros
 - [SQL Injection](thm-SQLi.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
-- [Cross-Site Request Forgery](thm-CSRF.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
+- [Cross-Site Request Forgery (CSRF)](thm-CSRF.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
 - [Cross-Site Scripting (XSS)](thm-XSS.md) — crafting context-specific XSS payloads, bypassing filters, and escalating from alert() to cookie theft
