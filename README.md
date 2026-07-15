@@ -14,3 +14,4 @@ platforms, labs, and in-scope programs.
   modifying web requests, plus credential attacks and macros
 - [SQL Injection](thm-sql-injection.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
 - [Cross-Site Request Forgery](https://github.com/thedivyeshkhatri/security-writeups/blob/main/thm-csrf.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
+- [Cross-Site Scripting](https://github.com/thedivyeshkhatri/security-writeups/blob/main/thm-xss.md) — crafting context-specific XSS payloads, bypassing filters, and escalating from alert() to cookie theft
