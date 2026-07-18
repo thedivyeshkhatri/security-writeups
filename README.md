@@ -16,3 +16,4 @@ platforms, labs, and in-scope programs.
 - [Cross-Site Request Forgery (CSRF)](thm-csrf.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
 - [Cross-Site Scripting (XSS)](thm-xss.md) — crafting context-specific XSS payloads, bypassing filters, and escalating from alert() to cookie theft
 - [Server-Side Request Forgery (SSRF)](thm-ssrf.md) — bypassing a deny-list defense with a path-traversal trick to reach a restricted internal endpoint
+- [Insecure Direct Object Reference (IDOR)](thm-idor.md) — exploiting a missing authorization check on an API endpoint to access other users' profiles
