@@ -1,4 +1,4 @@
-# Burp Suite — TryHackMe
+# Burp Suite — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-12
 **Category:** Web
