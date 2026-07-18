@@ -1,4 +1,4 @@
-# Insecure Direct Object Reference (IDOR) — TryHackMe
+# Insecure Direct Object Reference (IDOR) — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-19  
 **Category:** Web, Access Control  
