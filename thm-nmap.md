@@ -1,6 +1,6 @@
 # Nmap — TryHackMe
 
-**Date:** 2026-07-19 
+**Date:** 2026-07-19  
 **Category:** Network, Tooling  
 **Skills used:** Nmap (host discovery, port scanning, service/OS detection)  
 
