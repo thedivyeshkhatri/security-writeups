@@ -1,4 +1,4 @@
-# Server-Side Request Forgery (SSRF) — TryHackMe
+# Server-Side Request Forgery (SSRF) — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-18  
 **Category:** Web, Server-Side  
