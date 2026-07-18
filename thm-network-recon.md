@@ -1,6 +1,6 @@
 # Network Reconnaissance — TryHackMe
 
-**Date:** 2026-06-28
+**Date:** 2026-07-19
 **Category:** Network, Fundamentals  
 **Skills used:** Passive & active reconnaissance, protocol analysis  
 
