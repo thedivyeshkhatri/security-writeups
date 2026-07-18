@@ -1,4 +1,4 @@
-# Cross-Site Scripting (XSS) — TryHackMe
+# Cross-Site Scripting (XSS) — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-15  
 **Category:** Web, Client-Side  
