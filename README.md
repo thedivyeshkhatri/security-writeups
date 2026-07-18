@@ -10,6 +10,7 @@ platforms, labs, and in-scope programs.
 ## Writeups
 
 ### TryHackMe
+- [Network Reconnaissance](thm-network-recon.md) — passive vs active recon, common protocols, and why encrypted protocols (TLS, SSH) defend against sniffing and MITM
 - [Burp Suite](thm-burp-suite.md) — using Burp for intercepting and
   modifying web requests, plus credential attacks and macros
 - [SQL Injection](thm-sqli.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
