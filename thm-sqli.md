@@ -1,4 +1,4 @@
-# SQL Injection — TryHackMe
+# SQL Injection — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-13  
 **Category:** Web, Database  
