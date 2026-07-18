@@ -12,7 +12,7 @@ platforms, labs, and in-scope programs.
 ### TryHackMe
 - [Burp Suite](thm-burp-suite.md) — using Burp for intercepting and
   modifying web requests, plus credential attacks and macros
-- [SQL Injection](thm-SQLi.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
-- [Cross-Site Request Forgery (CSRF)](thm-CSRF.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
-- [Cross-Site Scripting (XSS)](thm-XSS.md) — crafting context-specific XSS payloads, bypassing filters, and escalating from alert() to cookie theft
-- [Server-Side Request Forgery (SSRF)](thm-SSRF.md) — bypassing a deny-list defense with a path-traversal trick to reach a restricted internal endpoint
+- [SQL Injection](thm-sqli.md) — exploiting error-based and UNION-based SQLi, enumerating databases via information_schema
+- [Cross-Site Request Forgery (CSRF)](thm-csrf.md) — exploiting missing and weak (base64-encoded) CSRF tokens to take over accounts and escalate privileges
+- [Cross-Site Scripting (XSS)](thm-xss.md) — crafting context-specific XSS payloads, bypassing filters, and escalating from alert() to cookie theft
+- [Server-Side Request Forgery (SSRF)](thm-ssrf.md) — bypassing a deny-list defense with a path-traversal trick to reach a restricted internal endpoint
