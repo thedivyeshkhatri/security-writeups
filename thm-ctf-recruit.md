@@ -1,9 +1,9 @@
 # Recruit — TryHackMe
 
-**Date:** 2026-07-19
-**Difficulty:** Easy / Medium
-**Category:** Web Application — Information Disclosure, SQL Injection, Privilege Escalation
-**Skills used:** nmap, gobuster, Burp Suite, manual SQL injection, source-code review
+**Date:** 2026-07-19  
+**Difficulty:** Easy / Medium  
+**Category:** Web Application — Information Disclosure, SQL Injection, Privilege Escalation  
+**Skills used:** nmap, gobuster, Burp Suite, manual SQL injection, source-code review  
 
 > ⚖️ Performed in an authorized, in-scope lab environment (TryHackMe). All credentials, hashes, and flags recovered during this exercise have been redacted from this writeup.
 
