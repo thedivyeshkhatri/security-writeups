@@ -20,5 +20,4 @@ platforms, labs, and in-scope programs.
 - [Server-Side Request Forgery (SSRF)](thm-ssrf.md) — bypassing a deny-list defense with a path-traversal trick to reach a restricted internal endpoint
 - [Insecure Direct Object Reference (IDOR)](thm-idor.md) — exploiting a missing authorization check on an API endpoint to access other users' profiles
 - [File Disclosure → SQL Injection Chain](thm-ctf-recruit.md) — leaked app source via a file-read flaw to gain a foothold, then used UNION-based SQLi to recover admin credentials and take over the portal
-
-
+- [Session Management](thm-session-management.md) — session lifecycle, the IAAA model, and the opposite CSRF/XSS weaknesses of cookie vs token sessions
