@@ -1,4 +1,4 @@
-# File Inclusion (Path Traversal, LFI & RFI) — TryHackMe
+# File Inclusion (Path Traversal, LFI & RFI) — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-07-23  
 **Category:** Web, Server-Side  
