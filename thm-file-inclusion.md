@@ -1,13 +1,13 @@
 # File Inclusion (Path Traversal, LFI & RFI) — TryHackMe
 
-**Date:** [YYYY-MM-DD]  
+**Date:** 2026-07-23  
 **Category:** Web, Server-Side  
-**Skills used:** Path traversal, Local File Inclusion, Remote File Inclusion  
+**Skills used:** Path traversal, LFI, RFI, null-byte injection, Burp Repeater, cookie manipulation  
 
-> **TL;DR:** Studied how applications that build file paths from user input can be abused —
-> reading files outside the intended directory (**path traversal**), forcing the app to include
-> local files like `/etc/passwd` or logs (**LFI**), and making it execute attacker-hosted code
-> from a remote server (**RFI**).
+> **TL;DR:** Exploited file inclusion across four labs — reading flags via LFI and path
+> traversal (using `%00` null-byte injection to defeat an appended extension and a `./` filter),
+> and achieving **remote code execution via RFI** by hosting a malicious PHP file and having the
+> target execute it.
 
 ## Overview
 Many web applications load files based on user input — a language file, a template, a page
@@ -58,11 +58,59 @@ inclusion (in PHP, `allow_url_include`). It's rarer than LFI for that reason, bu
 direct code execution from an attacker-controlled source — is why it's treated as critical.
 
 ## Hands-On: TryHackMe Lab
-*(Drop your actual lab work here — this is the section only you can write. For each lab:)*
-- What parameter was includable, and how did you spot it (e.g. `?page=`, `?file=`)?
-- The exact payload(s) you used, in a code block.
-- What you managed to read or execute (e.g. `/etc/passwd`, a flag, a shell).
-- Any filter you had to bypass, and how.
+
+### Lab 1 — POST-based inclusion via Burp Repeater
+The input form was broken, so the `file` parameter had to be sent as a **POST** request. Using
+**Burp Suite Repeater**, I sent the request with the file path directly and captured the flag:
+
+```
+file=/etc/flag1
+```
+
+*Why it worked:* the endpoint included whatever path the `file` parameter pointed to, with no
+restriction on location.
+
+### Lab 2 — Access control + traversal + null byte
+Only admins could view the page, so first I changed my **cookie to an admin value** to reach it.
+Then I passed a traversal payload through the cookie to read the flag:
+
+```
+../../../../etc/flag2%00
+```
+
+*Why it worked:* the `../` sequences climb to the filesystem root, and the **`%00` null byte**
+truncates the string — so any file extension the app tried to append was discarded, letting me
+include `/etc/flag2` directly. (Null-byte injection works on older PHP versions where `%00`
+terminates the string.)
+
+### Lab 3 — Filter bypass + appended extension
+This lab had a filter that strips `./` from the input and appends `.php` to the end. I still
+reached the flag with a crafted traversal path plus a null byte to drop the appended extension:
+
+```bash
+curl -X POST http://LabMachine/challenges/chall3.php \
+  -d 'method=POST&file=../../../etc/flag3%00'
+```
+
+*Why it worked:* the `%00` truncates the path before the forced `.php` is applied, so the server
+resolves `/etc/flag3` instead of `/etc/flag3.php` — beating both the filter and the extension
+append.
+
+### Lab 4 — RFI to remote code execution
+For the final lab I hosted a malicious PHP file and served it over a simple web server, then had
+the target include it via **RFI**:
+
+```php
+// hostname.php, served from my Python HTTP server
+<?php echo exec("hostname"); ?>
+```
+
+I started the server (`python3 -m http.server`) and pointed the vulnerable `file` parameter at
+it. Because the app included and executed the remote file, my `exec("hostname")` ran **on the
+target**, confirming remote code execution and revealing the flag.
+
+*Why it worked:* the server allowed remote URL inclusion, so it fetched and executed
+attacker-controlled code — the defining behavior of RFI.
 
 ## The Fix (Defensive View)
 The root cause is untrusted input reaching a file operation. Defenses, strongest first:
@@ -79,7 +127,9 @@ The root cause is untrusted input reaching a file operation. Defenses, strongest
 ## What I Learned
 Learned how path traversal, LFI, and RFI relate as an escalating chain built on the *same* root
 cause — untrusted input in a file operation — with impact rising from **reading files**
-(traversal) to **executing local files** (LFI, e.g. via log poisoning) to **executing remote
-code** (RFI). The most useful insight was that the fix is almost always to *stop using user
-input as a path* and map to an allow-list instead — the same "allow-list beats deny-list"
-lesson that came up in my SSRF writeup.
+(traversal) to **executing remote code** (RFI, demonstrated hands-on with `exec("hostname")`).
+The standout technique was **null-byte injection (`%00`)**: in labs 2 and 3 it let me truncate a
+server-appended `.php` extension and slip past a filter, turning a blocked include into a
+successful one. And the fix lesson echoed my SSRF writeup — *stop using user input as a path*
+and map to an allow-list instead of trying to filter bad input, because filters (like the `./`
+stripper in lab 3) can be bypassed.
