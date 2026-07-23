@@ -24,4 +24,5 @@ platforms, labs, and in-scope programs.
 - [Broken Authentication](thm-broken-auth.md) — username enumeration, brute force, a password-reset hijack via HTTP Parameter Pollution, and cookie manipulation
 - [File Inclusion](thm-file-inclusion.md) — path traversal and LFI with null-byte injection, plus RFI escalated to remote code execution
 - [Command Injection](thm-command-injection.md) — verbose and blind OS command injection, shell operators, and time-based detection
+- [API Pentesting](thm-api-pentesting.md) — BOLA, JWT attacks (weak secrets, none-algorithm), excessive data exposure, and mass assignment
 
