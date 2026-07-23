@@ -25,4 +25,5 @@ platforms, labs, and in-scope programs.
 - [File Inclusion](thm-file-inclusion.md) — path traversal and LFI with null-byte injection, plus RFI escalated to remote code execution
 - [Command Injection](thm-command-injection.md) — verbose and blind OS command injection, shell operators, and time-based detection
 - [API Pentesting](thm-api-pentesting.md) — BOLA, JWT attacks (weak secrets, none-algorithm), excessive data exposure, and mass assignment
+- [Support Operations Platform](thm-ctf-support.md) — a five-stage chain from weak-password foothold to command-injection RCE
 
