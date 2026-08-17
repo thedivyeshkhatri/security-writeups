@@ -14,6 +14,8 @@ full compromise, chaining multiple vulnerabilities.
 
 - [File Disclosure → SQL Injection Chain](thm-ctf-recruit.md) — leaked app source via a file-read flaw to gain a foothold, then used UNION-based SQLi to recover admin credentials and take over the portal
 - [Support Operations Platform](thm-ctf-support.md) — a five-stage chain from weak-password foothold to command-injection RCE
+- [Linux PrivEsc Chain](thm-ctf-jump.md) — lateral movement through five users to root via cron poisoning, PATH hijack, sudo helper abuse, and a GTFOBins less escape
+- [Windows PrivEsc Chain](thm-ctf-windows-jump.md) — escalating from anonymous SMB access to SYSTEM via a service-binary hijack, a registry AutoLogon credential, and a writable SYSTEM scheduled task
 
 ## Reconnaissance & Tooling
 
