@@ -1,4 +1,4 @@
-# Privilege Escalation lateral Jump — TryHackMe
+# Linux Escalation lateral chain — [TryHackMe](https://tryhackme.com/)
 
 **Date:** 2026-08-14  
 **Difficulty:** Medium / Hard  
