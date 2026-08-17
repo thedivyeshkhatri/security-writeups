@@ -1,4 +1,4 @@
-# Internal Automation Pipeline — TryHackMe
+# Privilege Escalation lateral Jump — TryHackMe
 
 **Date:** 2026-08-14  
 **Difficulty:** Medium / Hard  
