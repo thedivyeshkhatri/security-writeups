@@ -1,4 +1,4 @@
-# Support Operations Platform — [TryHackMe](https://tryhackme.com/)
+# Support Operations Platform — TryHackMe (Support)
 
 **Date:** 2026-07-23  
 **Difficulty:** Medium  
