@@ -86,8 +86,8 @@ print(token)
 ```
 
 Critically, this token **I tried to decode it with the same key obtained earlier from `app.js` in Stage
-2 because it is the only key I had it worked. Later I found that the any key would have worked because
-the piece of code that validates the key was commented out so the key were never being validated** — 
+2 because it is the only key I had it worked. Later, I found that any key would have worked because
+the piece of code that validates the key was commented out. So the key was never being validated** — 
 the application reused its hardcoded secret as the **JWT signing key** (HS256). Since I
 had that secret, I could write a Python script to **sign my own token from scratch**, setting
 `"role":"admin"` and any username I chose, and the server would trust it because the signature
