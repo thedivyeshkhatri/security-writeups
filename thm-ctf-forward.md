@@ -1,6 +1,6 @@
 # Active Directory: KeePass to RBCD Abuse — TryHackMe
 
-**Date:** 2026-09-09 
+**Date:** 2026-09-09  
 **Category:** Active Directory, Network  
 **Skills used:** Nmap, RDP, credential extraction (KeePass), password spraying, BloodHound, Resource-Based Constrained Delegation (RBCD)  
 
