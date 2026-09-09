@@ -68,7 +68,8 @@ Requesting a session JWT and decoding it showed a predictable structure:
 ```json
 {"sub":"robert.wilson","role":"user","iat":1788866255,"exp":1788869855}
 ```
-```import jwt
+```python
+import jwt
 import time
 
 payload = {
