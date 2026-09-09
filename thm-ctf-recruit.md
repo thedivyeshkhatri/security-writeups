@@ -1,4 +1,4 @@
-# Recruit — [TryHackMe](https://tryhackme.com/)
+# Recruit — TryHackMe
 
 **Date:** 2026-07-19  
 **Difficulty:** Easy / Medium  
