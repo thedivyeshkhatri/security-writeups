@@ -1,6 +1,6 @@
 # Nexus: Crypto Key to Root — TryHackMe
 
-**Date:** [YYYY-MM-DD]  
+**Date:** 2026-09-09    
 **Category:** Web, Full Chain (Web-to-Root)  
 **Skills used:** Recon (Nmap, feroxbuster), hardcoded key recovery, broken password reset, IDOR, JWT secret leakage/forgery, stored XSS, RFI-to-RCE, Linux privilege escalation  
 
