@@ -1,4 +1,4 @@
-# Active Directory: KeePass to RBCD Abuse — TryHackMe
+# Active Directory: KeePass to RBCD Abuse — TryHackMe (Forward)
 
 **Date:** 2026-09-09  
 **Category:** Active Directory, Network  
