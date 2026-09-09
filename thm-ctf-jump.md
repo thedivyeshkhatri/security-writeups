@@ -1,4 +1,4 @@
-# Linux Escalation lateral chain — [TryHackMe](https://tryhackme.com/)
+# Linux Escalation lateral chain — TryHackMe (Jump)
 
 **Date:** 2026-08-14  
 **Difficulty:** Medium / Hard  
