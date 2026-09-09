@@ -1,4 +1,4 @@
-# Active Directory: File Coercion to Domain Admin — TryHackMe
+# Active Directory: File Coercion to Domain Admin — TryHackMe (Proxy)
 
 **Date:** 2026-09-09  
 **Category:** Active Directory, Network  
