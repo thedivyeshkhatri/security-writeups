@@ -1,4 +1,4 @@
-# Windows PrivEsc Chain — [TryHackMe](https://tryhackme.com/)
+# Windows PrivEsc Chain — TryHackMe (Windows Jump)
 
 **Date:** 2026-08-17  
 **Difficulty:** Medium  
