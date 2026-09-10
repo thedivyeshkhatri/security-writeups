@@ -15,6 +15,7 @@ full compromise, chaining multiple vulnerabilities.
 - [AD Delegation Abuse](tryhackme/ctf-writeups/thm-ctf-proxy.md) — SMB enumeration to Domain Admin via NTLM coercion, BloodHound pathfinding, and Kerberos constrained delegation (S4U2Self/S4U2Proxy) abuse
 - [AD RBCD Abuse](tryhackme/ctf-writeups/thm-ctf-forward.md) — KeePass credential extraction, password spraying, and Resource-Based Constrained Delegation abuse to Domain Admin
 - [Web-to-Root Chain](tryhackme/ctf-writeups/thm-ctf-domino.md) — hardcoded key recovery, broken password reset, IDOR, JWT secret forgery, stored XSS, RFI-to-RCE, and cronjob privesc to root
+- [SQLi to Root](tryhackme/ctf-writeups/thm-ctf-silent-monitoring.md) — SQL injection auth bypass, command injection via newline smuggling, and an offline KeePass crack to recover root
 - [File Disclosure → SQL Injection Chain](tryhackme/ctf-writeups/thm-ctf-recruit.md) — leaked app source via a file-read flaw to gain a foothold, then used UNION-based SQLi to recover admin credentials and take over the portal
 - [Support Operations Platform](tryhackme/ctf-writeups/thm-ctf-support.md) — a five-stage chain from weak-password foothold to command-injection RCE
 - [Linux PrivEsc Chain](tryhackme/ctf-writeups/thm-ctf-jump.md) — lateral movement through five users to root via cron poisoning, PATH hijack, sudo helper abuse, and a GTFOBins less escape
