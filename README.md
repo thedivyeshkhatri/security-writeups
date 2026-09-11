@@ -17,6 +17,7 @@ full compromise, chaining multiple vulnerabilities.
 - [Web-to-Root Chain](tryhackme/ctf-writeups/thm-ctf-domino.md) — hardcoded key recovery, broken password reset, IDOR, JWT secret forgery, stored XSS, RFI-to-RCE, and cronjob privesc to root
 - [SQLi to Root](tryhackme/ctf-writeups/thm-ctf-silent-monitoring.md) — SQL injection auth bypass, command injection via newline smuggling, and an offline KeePass crack to recover root
 - [Node App to Domain Admin](tryhackme/ctf-writeups/thm-ctf-dead-drop.md) — SQLi to Node.js RCE, credentials leaked via a decompiled APK reused on the domain, escalating to Domain Admin via direct AddMember abuse
+- [RecruitCorp: SQLi to Root](tryhackme/ctf-writeups/thm-ctf-operation-promotion.md) — SQLi, admin-panel enumeration, command injection, pattern-based password recovery after getting stuck, and sudo/GTFOBins privesc to root
 - [File Disclosure → SQL Injection Chain](tryhackme/ctf-writeups/thm-ctf-recruit.md) — leaked app source via a file-read flaw to gain a foothold, then used UNION-based SQLi to recover admin credentials and take over the portal
 - [Support Operations Platform](tryhackme/ctf-writeups/thm-ctf-support.md) — a five-stage chain from weak-password foothold to command-injection RCE
 - [Linux PrivEsc Chain](tryhackme/ctf-writeups/thm-ctf-jump.md) — lateral movement through five users to root via cron poisoning, PATH hijack, sudo helper abuse, and a GTFOBins less escape
