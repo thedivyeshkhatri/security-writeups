@@ -1,4 +1,4 @@
-# Kestrel: SSRF to Root via Tar Wildcard Injection — TryHackMe
+# SSRF to Root via Tar Wildcard Injection — TryHackMe
 
 **Date:** 2026-09-11  
 **Category:** Web, Full Chain  
