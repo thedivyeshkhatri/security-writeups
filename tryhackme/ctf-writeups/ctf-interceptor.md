@@ -1,4 +1,4 @@
-# MediaHub: OTP Logic Flaw to RCE — TryHackMe
+# OTP Logic Flaw to RCE — TryHackMe (Interceptor)
 
 **Date:** 2026-09-12  
 **Category:** Web, Full Chain  
